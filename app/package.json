@@ -1,0 +1,13 @@
+{
+  "name": "reverse-proxy-load-balancer-nginx",
+  "version": "1.0.0",
+  "description": "A basic and simple example of an application running with reverse proxy and load balancing with nginx.",
+  "type": "module",
+  "keywords": [
+    "reverse proxy",
+    "load balancer",
+    "nginx"
+  ],
+  "author": "Ricardo Pires <ricardo.tech@live.com>",
+  "license": "ISC"
+}
