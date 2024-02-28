@@ -2,11 +2,11 @@
 
 A basic and simple example of an application running with reverse proxy and load balancing with nginx.
 
-To do this, I have created an application like a web server written in Node.js and Express. After that, I used Docker to build an image and use it with Docker Compose to have more than one instance of the application running with load balancer configured with Nginx. Below are the steps I did.
+To do this, I created a web server written in Node.js and Express. After that, I used Docker to build an image and use it with Docker Compose to have more than one instance of the application running with a load balancer configured in Nginx. Below are the steps I took.
 
 ## The steps
 
-### The creation of the application with Node.js + Express
+### Creating the application with Node.js + Express
 
 ```javascript
 import express from "express";
@@ -23,7 +23,7 @@ app.listen(3000, () => {
 });
 ```
 
-### The dockerization of the application with Docker
+### Dockerizing the application with Docker
 
 ```docker
 FROM node:alpine
@@ -39,7 +39,7 @@ CMD [ "node", "index.js" ]
 USER node
 ```
 
-### The configuration of Reverse Proxy and Load Balancer with Nginx
+### Configuring reverse proxy and load balancer with Nginx
 
 ```properties
 events {
@@ -65,7 +65,7 @@ http {
 }
 ```
 
-Here, I used the Round Robin load balancer strategy, notice the two servers declared in the upstream with the same weight:
+Here, I used the Round Robin load balancer algorithm, notice the two servers declared in the upstream with the same weight:
 
 ```properties
 upstream app {
@@ -74,7 +74,7 @@ upstream app {
 }
 ```
 
-And also notice the reverse proxy I did in the server configuration, pointing the named upstream app:
+And also notice the reverse proxy I made in the server configuration, pointing the named upstream app:
 
 ```properties
 server {
@@ -89,9 +89,9 @@ server {
 }
 ```
 
-The "Round Robin" strategy is one of the simplest and widely used load balancing strategies. When configured with Nginx, the Round Robin load balancer evenly distributes requests among the available servers. This approach is effective in evenly distributing the load among the servers, ensuring that no one server becomes overloaded while others remain underutilized. However, it is important to note that the Round Robin strategy does not take into account the actual load or capacity of the servers; it simply forwards requests in a predefined order.
+The "Round Robin" algorithm is one of the simplest and widely used load balancing algorithms. When configured with Nginx, the Round Robin load balancer evenly distributes requests across the available servers. This approach is effective in evenly distributing load across servers, ensuring that no server becomes overloaded while others remain underutilized. However, it is important to note that the Round Robin algorithm does not take into account the real load or capacity of the servers; it simply forwards requests in a predefined order.
 
-### Definition of the application instances + Nginx with Docker Compose
+### Defining application instances + Nginx with Docker Compose
 
 ```yaml
 version: "3.8"
@@ -125,23 +125,23 @@ services:
       - local
 ```
 
-Notice the services `app1` and `app2`. These are the instances running in load balancer.
+Note the services `app1` and `app2`. These are the instances running on the load balancer.
 
-### How to run this project
+## How to run this project
 
 To run this project just clone this repo and run the docker compose file. To run, you just need Git, Docker and Docker Compose installed in your machine.
 
 ```bash
-git clone git@github.com:dalloglio/reverse-proxy-load-balancer-nginx.git
+git clone https://github.com/dalloglio/reverse-proxy-load-balancer-nginx.git
 
 cd reverse-proxy-load-balancer-nginx
 
 docker compose up -d
 ```
 
-Now, you can access your prefered browser and navigate to http://app.127.0.0.1.nip.io and each time you refresh the page you will first see the application running in the service `app1` and next time you will see the application running in the service `app2`.
+Now, you can go to your preferred browser and navigate to http://app.127.0.0.1.nip.io and each time you refresh the page you will first see the app running on the `app1` service and the next time you will see the app running on the service `app2` and so on.
 
-Application running in `app1`
+Application running on `app1`
 
 ![application running in app1](./.assets/application-running-in-app1.png "Application running in app1")
 
@@ -173,4 +173,4 @@ A load balancer is like a traffic manager that distributes client requests among
 
 ## Nginx
 
-The Nginx is an open-source web server, known for its high performance, scalability and low resource consumption. It is designed to handle a large volume of simultaneous requests efficiently. Nginx gained popularity and is now widely used worldwide for hosting websites, web applications, and online services. Nginx is also commonly used as a reverse proxy, load balancer, caching server, and more. Its flexibility and capacity to handle a variety of tasks make it a popular choice for modern infrastructures. In summary, Nginx is like a traffic manager for the internet, ensuring that the user requests are handled quickly, efficiently and sacurely.
+Nginx is an open-source web server known for its high performance, scalability and low resource consumption. It is designed to handle a large volume of simultaneous requests efficiently. Nginx has gained popularity and is now widely used worldwide for hosting websites, web applications, and online services. Nginx is also commonly used as a reverse proxy, load balancer, caching server, and more. Its flexibility and capacity to handle a variety of tasks make it a popular choice for modern infrastructures. In short, Nginx is like a traffic manager for the internet, ensuring that user requests are served quickly, efficiently and sacurely.
